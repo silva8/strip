@@ -1,0 +1,34 @@
+{
+  "name": "strip",
+  "version": "1.0.0",
+  "description": "Strip app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silva8/strip.git"
+  },
+  "author": "silva8",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silva8/strip/issues"
+  },
+  "homepage": "https://github.com/silva8/strip#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.2",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.7",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^12.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
