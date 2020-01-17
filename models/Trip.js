@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
+    car: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
     from: {
     	type: String,
     	required: true
@@ -13,10 +17,6 @@ const UserSchema = new Schema({
   	},
   	date: {
     	type: Date,
-    	required: true
-  	},
-  	carId: {
-    	type: String,
     	required: true
   	},
   	availableSeats: {

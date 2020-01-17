@@ -20,7 +20,8 @@ const UserSchema = new Schema({
     	required: true
   	},
   	birthdate: {
-    	type: Date
+    	type: Date,
+    	required: true
   	}
 });
 

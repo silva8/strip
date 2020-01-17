@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CarSchema = new Schema({
+  owner: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
   brand: {
     type: String,
     required: true
