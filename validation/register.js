@@ -27,6 +27,8 @@ module.exports = function validateRegisterInput(data) {
 // Birthdate checks
   if (Validator.isEmpty(data.birthdate)) {
     errors.birthdate = "Birthdate field is required";
+  } else if (!Validator.isISO8601(data.birthdate)) {
+    errors.birthdate = "Birthdate must be a valid date";
   }
 // Password checks
   if (Validator.isEmpty(data.password)) {
