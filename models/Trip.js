@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-const UserSchema = new Schema({
-    car: {
+const TripSchema = new Schema({
+    carId: {
       type: Schema.Types.ObjectId,
       required: true
     },
@@ -26,4 +26,4 @@ const UserSchema = new Schema({
     passengers: [Schema.Types.ObjectId]
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
+module.exports = Trip = mongoose.model("trips", TripSchema);
