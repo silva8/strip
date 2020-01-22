@@ -4,12 +4,18 @@ const isEmpty = require("is-empty");
 module.exports = function validateCarRegisterInput(data) {
   let errors = {};
 // Convert empty fields to an empty string so we can use validator functions
+  data.userId = !isEmpty(data.userId) ? data.userId : "";
   data.brand = !isEmpty(data.brand) ? data.brand : "";
   data.model = !isEmpty(data.model) ? data.model : "";
   data.year = !isEmpty(data.year) ? data.year : "";
   data.plate = !isEmpty(data.plate) ? data.plate : "";
   data.color = !isEmpty(data.color) ? data.color : "";
   data.seats = !isEmpty(data.seats) ? data.seats : "";
+  data.ac = !isEmpty(data.ac) ? data.ac : "";
+// User checks
+  if (Validator.isEmpty(data.userId)) {
+    errors.userId = "You must be logged in to register a car";
+  }
 // Brand checks
   if (Validator.isEmpty(data.brand)) {
     errors.brand = "Brand field is required";

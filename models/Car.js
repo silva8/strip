@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CarSchema = new Schema({
-  owner: {
+  userId: {
     type: Schema.Types.ObjectId,
     required: true
   },
