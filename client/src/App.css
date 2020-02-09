@@ -1,0 +1,39 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.header {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+	background-color : #E74C3C;
+}
+
+.leftHeaderTitles {
+	float: right;
+}
+
+.headerTitle {
+	margin-right: 30px;
+	color: #F4F6F7;
+	font-weight: 500;
+}
+
+.content {
+	margin-top: 64px;
+	width: 100%;
+}
+
+.contentBody {
+	background: #fff;
+	padding: 24px;
+}
+
+.footer {
+	text-align: center;
+	position: relative;
+  	width: 100%;
+  	bottom: 0; /* stick to bottom */
+}

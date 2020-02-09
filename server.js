@@ -34,7 +34,7 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 
-// Routes
+//API routes
 app.use("/", routes);
 
 const port = 5000;
