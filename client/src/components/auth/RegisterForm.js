@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 import {
   Form,
   Input,
@@ -18,8 +21,23 @@ class RegistrationForm extends Component {
     super(props);
     this.state = {
       confirmDirty: false,
-      autoCompleteResult: [],
+      autoCompleteResult: []
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
+  componentDidMount() {
+      // If logged in and user navigates to Register page, should redirect them to dashboard
+      if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/dashboard");
+      }
   }
 
   handleSubmit = e => {
@@ -27,6 +45,8 @@ class RegistrationForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        const newUser = this.props.form.getFieldsValue();
+        this.props.registerUser(newUser, this.props.history);
       }
     });
   };
@@ -48,7 +68,7 @@ class RegistrationForm extends Component {
   validateToNextPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['password2'], { force: true });
     }
     callback();
   };
@@ -105,7 +125,7 @@ class RegistrationForm extends Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="First name">
-          {getFieldDecorator('firstname', {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
@@ -170,7 +190,7 @@ class RegistrationForm extends Component {
           })(<Input.Password />)}
         </Form.Item>
         <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
+          {getFieldDecorator('password2', {
             rules: [
               {
                 required: true,
@@ -205,6 +225,20 @@ class RegistrationForm extends Component {
   }
 }
 
+RegistrationForm.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
 const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
 
-export default WrappedRegistrationForm;
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(WrappedRegistrationForm));

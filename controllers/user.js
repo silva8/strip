@@ -27,7 +27,8 @@ const userController = {
             lastname: req.body.lastname,
             email: req.body.email,
             birthdate: req.body.birthdate,
-            password: req.body.password
+            password: req.body.password,
+            phone: req.body.phone
           });
           // Hash password before saving in database
           bcrypt.genSalt(10, (err, salt) => {
