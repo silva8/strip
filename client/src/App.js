@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -9,7 +9,10 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import WrappedLoginForm from './components/auth/LoginForm';
-import WrappedRegistrationForm from './components/auth/RegisterForm'
+import WrappedRegistrationForm from './components/auth/RegisterForm';
+import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/routeTypes/PrivateRoute';
+import PublicRoute from './components/routeTypes/PublicRoute';
 
 import './App.css';
 
@@ -51,8 +54,11 @@ function App() {
 				    </Header>
 				    <Content className="content">
 				      	<div className="contentBody">
-				      		<Route exact path="/login" component={WrappedLoginForm} />
-				      		<Route exact path="/register" component={WrappedRegistrationForm} />
+				      		<Switch>
+					      		<PublicRoute exact restricted path="/login" component={WrappedLoginForm} />
+					      		<PublicRoute exact restricted path="/register" component={WrappedRegistrationForm} />
+					      		<PrivateRoute exact path="/dashboard" component={Dashboard} />
+				      		</Switch>
 				      	</div>
 				    </Content>
 				    <Footer className="footer">Ant Design ©2018 Created by Ant UED</Footer>
