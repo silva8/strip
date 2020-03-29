@@ -84,7 +84,6 @@ class RegistrationForm extends Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
@@ -109,13 +108,13 @@ class RegistrationForm extends Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '61',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="61">+61</Option>
-        <Option value="56">+56</Option>
-      </Select>,
+    const prefixSelector = (
+      <Form.Item name="prefix" noStyle>
+        <Select style={{ width: 70 }}>
+          <Option value="61">+61</Option>
+          <Option value="56">+56</Option>
+        </Select>
+      </Form.Item>
     );
 
     const emailOptions = autoCompleteResult.map(email => (
@@ -124,97 +123,76 @@ class RegistrationForm extends Component {
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="First name">
-          {getFieldDecorator('name', {
-            rules: [
-              {
-                required: true,
-                message: 'Please insert your name!',
-              }
-            ],
-          })(<Input/>)}
+        <Form.Item name="name" label="First name" rules= {[{ required: true, message: 'Please insert your name!'}]}>
+          <Input/>
         </Form.Item>
-        <Form.Item label="Last name">
-          {getFieldDecorator('lastname', {
-            rules: [
-              {
-                required: true,
-                message: 'Please insert your lastname!',
-              }
-            ],
-          })(<Input/>)}
+        <Form.Item name="lastname" label="Last name" rules= {[{required: true, message: 'Please insert your lastname!'}]}>
+          <Input/>
         </Form.Item>
-        <Form.Item label="Birthdate">
-          {getFieldDecorator('birthdate', {
-            rules: [
-              {
-                required: true,
-                message: 'Please insert your birthdate!',
-              }
-            ],
-          })(<DatePicker style={{width: '100%'}}/>)}
+        <Form.Item name="birthdate" label="Birthdate" rules= {[{required: true, message: 'Please insert your birthdate!'}]}>
+          <DatePicker style={{width: '100%'}}/>
         </Form.Item>
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(
-              <AutoComplete
-                dataSource={emailOptions}
-                onChange={this.handleEmailChange}
-                placeholder="email"
-              >
-                <Input />
-              </AutoComplete>
-            )}
+        <Form.Item
+          name="email"
+          label="E-mail" 
+          rules= {
+            [{
+              required: true, 
+              message: 'The input is not valid E-mail!'
+            },
+            {
+              required: true, 
+              message: 'Please input your E-mail!'
+            }]
+          }
+        >
+          <AutoComplete
+            dataSource={emailOptions}
+            onChange={this.handleEmailChange}
+            placeholder="email"
+          >
+            <Input />
+          </AutoComplete>
         </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
+        <Form.Item 
+          name="password"
+          label="Password" 
+          hasFeedback
+          rules= {
+            [{
+              required: true,
+              message: 'Please input your password!',
+            },
+            {
+              validator: this.validateToNextPassword,
+            }]
+          }
+        >
+          <Input.Password />
         </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('password2', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+        <Form.Item
+          name="password"
+          label="Confirm Password"
+          hasFeedback
+          rules= {
+            [{
+              required: true,
+              message: 'Please re-enter your password!',
+            },
+            {
+              validator: this.validateToNextPassword,
+            }]
+          }
+        >
+          <Input.Password onBlur={this.handleConfirmBlur} />
         </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+        <Form.Item name="phone" label="Phone Number" rules= {[{ required: true, message: 'Please input your phone number!'}]}>
+          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
         </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              I have read the <Link>agreement</Link> (To do)
-            </Checkbox>,
-          )}
+        <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
+          <Checkbox>
+            I have read the <Link>agreement</Link> (To do)
+          </Checkbox>
           <Button type="primary" htmlType="submit" style={{width: '80%'}}>
             Register
           </Button>
@@ -236,9 +214,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
-
 export default connect(
   mapStateToProps,
   { registerUser }
-)(withRouter(WrappedRegistrationForm));
+)(withRouter(RegistrationForm));

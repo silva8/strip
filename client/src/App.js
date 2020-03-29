@@ -13,6 +13,7 @@ import WrappedRegistrationForm from './components/auth/RegisterForm';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routeTypes/PrivateRoute';
 import PublicRoute from './components/routeTypes/PublicRoute';
+import WrappedStepOneForm from './components/cars/StepOneForm';
 
 import './App.css';
 
@@ -58,6 +59,7 @@ function App() {
 					      		<PublicRoute exact restricted path="/login" component={WrappedLoginForm} />
 					      		<PublicRoute exact restricted path="/register" component={WrappedRegistrationForm} />
 					      		<PrivateRoute exact path="/dashboard" component={Dashboard} />
+					      		<PublicRoute exact path="/test" component={WrappedStepOneForm} />
 				      		</Switch>
 				      	</div>
 				    </Content>
