@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -8,12 +8,13 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import NavBar from './components/navBar/NavBar';
 import WrappedLoginForm from './components/auth/LoginForm';
 import WrappedRegistrationForm from './components/auth/RegisterForm';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routeTypes/PrivateRoute';
 import PublicRoute from './components/routeTypes/PublicRoute';
-import WrappedStepOneForm from './components/cars/StepOneForm';
+import InsertCarForm from './components/cars/InsertCarForm';
 
 import './App.css';
 
@@ -45,13 +46,7 @@ function App() {
 		    <div className="App">
 				<Layout>
 				    <Header className="header">
-				    	<div className="logo" />
-				    	<div className="leftHeaderTitles">
-					    	<Link className="headerTitle" to="/post">Post trip</Link>
-					      	<Link className="headerTitle" to="/search">Search trip</Link>
-					      	<Link className="headerTitle" to="/login">Login</Link>
-					      	<Link className="headerTitle" to="/register">Register</Link>
-				      	</div>
+				    	<NavBar />
 				    </Header>
 				    <Content className="content">
 				      	<div className="contentBody">
@@ -59,7 +54,7 @@ function App() {
 					      		<PublicRoute exact restricted path="/login" component={WrappedLoginForm} />
 					      		<PublicRoute exact restricted path="/register" component={WrappedRegistrationForm} />
 					      		<PrivateRoute exact path="/dashboard" component={Dashboard} />
-					      		<PublicRoute exact path="/test" component={WrappedStepOneForm} />
+					      		<PublicRoute exact path="/test" component={InsertCarForm} />
 				      		</Switch>
 				      	</div>
 				    </Content>

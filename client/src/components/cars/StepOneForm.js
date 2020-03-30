@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   Form,
-  Input,
   Select,
-  Button,
   DatePicker
 } from 'antd';
 
@@ -12,29 +10,15 @@ const { Option } = Select;
 
 class StepOneForm extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        this.props.submittedValues(values);
-        this.props.handleNextButton();
-      }
-    });
-  };
-
   render() {
+    let showing = true;
+    if (this.props.currentStep !== 1) {
+      showing = false;
+    }
     return (
-      <Form layout="vertical" labelAlign="right" onSubmit={this.handleSubmit}>
-        <Form.Item name="brand" label="Brand" rules= {[{required: true, message: 'Please insert the brand!'}]}>
+      <div style={{ display: (showing ? 'block' : 'none') }}>
+        <h1>Which car do you have?</h1>
+        <Form.Item name="brand" rules= {[{required: true, message: 'Please insert the brand!'}]}>
           <Select
               showSearch
               style={{ width: 200 }}
@@ -49,7 +33,7 @@ class StepOneForm extends Component {
               <Option value="honda">Honda</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="model" label="Model" rules= {[{required: true, message: 'Please insert the model!'}]}>
+        <Form.Item name="model" rules= {[{required: true, message: 'Please insert the model!'}]}>
           <Select
               showSearch
               style={{ width: 200 }}
@@ -59,27 +43,21 @@ class StepOneForm extends Component {
                 option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
           >
-              <Option value="audi">A3</Option>
-              <Option value="toyota">Landy</Option>
-              <Option value="honda">CRV</Option>
+              <Option value="a3">A3</Option>
+              <Option value="landy">Landy</Option>
+              <Option value="crv">CRV</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="year" label="Year" rules= {[{required: true, message: 'Please insert the year!'}]}>
+        <Form.Item name="year" rules= {[{required: true, message: 'Please insert the year!'}]}>
           <DatePicker picker="year" style={{width: '200px'}}/>
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Next
-          </Button>
-        </Form.Item>
-      </Form>
+      </div>
     );
   }
 }
 
 StepOneForm.propTypes = {
-  submittedValues: PropTypes.func.isRequired,
-  handleNextButton: PropTypes.func.isRequired
+  currentStep: PropTypes.number.isRequired
 };
 
 export default StepOneForm;

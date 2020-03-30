@@ -19,19 +19,17 @@ class LoginForm extends Component {
     }
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        const userData = this.props.form.getFieldsValue();
-        this.props.loginUser(userData);
-      }
-    });
+  onFinish = values => {
+    console.log('Received values of form: ', values);
+    this.props.loginUser(values);
+  };
+
+  onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
   };
 
   render() {
-    
+
     const formItemLayout = {
       wrapperCol: {
         xs: { span: 24 },
@@ -40,7 +38,7 @@ class LoginForm extends Component {
     };
 
     return (
-          <Form {...formItemLayout} onSubmit={this.handleSubmit} initialValues={{ remember: true }}>
+          <Form {...formItemLayout} onFinish={this.onFinish} onFinishFailed={this.onFinishFailed} initialValues={{ remember: true }}>
             <Form.Item name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
                 <Input
                   prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -54,8 +52,10 @@ class LoginForm extends Component {
                   placeholder="Password"
               />
             </Form.Item>
-            <Form.Item name="remember" valuePropName='checked'>
-              <Checkbox style={{float: 'left'}}>Remember me</Checkbox>
+            <Form.Item>
+              <Form.Item name="remember" valuePropName='checked'>
+                <Checkbox style={{float: 'left'}}>Remember me</Checkbox>
+              </Form.Item>
               <Link to="/recover-password" style={{float: 'right'}}>
                 Forgot password
               </Link>
